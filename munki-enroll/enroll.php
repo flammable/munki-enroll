@@ -24,8 +24,8 @@ else
         
         // Add manifests
         $dict->add( 'included_manifests', $array = new CFArray() );
-        $array->add( new CFString( '___core_software' ) );
-        $array->add( new CFString( '__faculty_staff' ) );
+        $array->add( new CFString( 'manifest1' ) );
+        $array->add( new CFString( 'manifest2' ) );
         
         // Save the newly created plist
         $plist->saveXML( '../manifests/' . $hostname );
