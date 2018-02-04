@@ -1,26 +1,18 @@
 # Munki Enroll
 
-A set of scripts to automatically enroll clients in Munki. Adapted from [edingc/munki-enroll](https://github.com/edingc/munki-enroll).
+A set of scripts to automatically enroll clients in Munki. Adapted from the original  [edingc/munki-enroll](https://github.com/edingc/munki-enroll) project.
 
 ## Why modify Munki Enroll?
 
-We're using Munki to bootstrap Macs after imaging with DeployStudio.  However, we prefer not to set the [ClientIdentifier or SoftwareRepoURL](https://code.google.com/p/munki/wiki/configuration) - the repository is located at http://munki/repo, and we create a unique manifest per machine. Each manifest is named after the hostname of the computer, and includes other manifests, depending on the software that should be made available to the computer.
+For our needs, Munki Enroll was too complex. We just wanted a way to create manifests automatically, when setting up a new Mac.
 
-While I don't mind creating manifests manually each time I need to image a new Mac, this is not convenient nor possible for everyone that has access to use our DeployStudio server. Without a manifest, though, each new Mac receives no software.
+We're using the "one manifest per Mac" method, and each Mac's manifest has a minimum of one more manifest nested in it. This gives us the flexibility to target groups of Macs for software deployments, but also target individual Macs.
 
-This fork of Cody Eding's Munki Enroll project is considerably simpler, and fits our needs exactly.  Here's how it works:
+## Installation
 
-1. Someone with the proper Active Directory permissions to use our DeployStudio server runs the faculty/staff imaging workflow.
-2. DeployStudio prompts the user for the hostname of the computer, then writes a basic OS X image to the hard drive.  After the imaging is completed, DeployStudio reboots and runs the post-imaging tasks. The munki_enroll.sh script runs after the machine is bound to AD, but before the [bootstrap file](https://code.google.com/p/munki/wiki/BootstrappingWithMunki) is created.
-3. If the hostname already exists as a manifest, the script exits. Otherwise, the server creates a new basic faculty/staff manifest based on the hostname of the computer.
+Simply copy the `munki-enroll` directory to the root of your Munki repository.  Be sure to edit the `enroll.php` file to add the manifests that should be nested in your Mac's manifest (which will be named to match the computer name).
 
-In our case, the new manifest contains two other manifests: "\_\__core_software" and "__faculty_staff".  The "core software" manifest contains software made available to everyone, but "faculty/staff" contains software just for faculty and staff (not labs, podiums, or servers).
-
-If a user needs more software pushed to their computer, it's very easy for us to do so by editing their manifest.
-
-### More?
-
-You should check out [edingc/munki-enroll](https://github.com/edingc/munki-enroll) for the original intentions behind his code, and for installation instructions.
+In the `Scripts` directory, edit `munki_enroll.sh` to include the FQDN and repo path of your Munki server. Run it with DeployStudio, Imagr, or whatever you'd like.
 
 ## License
 
