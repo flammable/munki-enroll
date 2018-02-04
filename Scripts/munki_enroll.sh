@@ -1,12 +1,14 @@
 #!/bin/sh 
- 
-HOSTN=$( scutil --get LocalHostName );
 
+scutil="/usr/sbin/scutil"
+curl="/usr/bin/curl"
+
+COMPUTERNAME=$(${scutil} --get ComputerName)
 SUBMITURL="http://munki/repo/munki-enroll/enroll.php"
 
-# Application paths
-CURL="/usr/bin/curl"
+${curl} --max-time 5 --silent --get -d hostname="${COMPUTERNAME}" "$SUBMITURL"
 
-$CURL --max-time 5 --silent --get -d hostname="$HOSTN" "$SUBMITURL"
+# Use this if you're using HTTP/HTTPS Basic Authentication
+# ${curl} --max-time 5 --silent --get -d hostname="${COMPUTERNAME}" --user "login:password" "$SUBMITURL"
 
 exit 0
