@@ -6,7 +6,7 @@ A set of scripts to automatically enroll clients in Munki. Adapted from the orig
 
 For our needs, Munki Enroll was too complex. We just wanted a way to create manifests automatically, when setting up a new Mac.
 
-We're using the "one manifest per Mac" method, and each Mac's manifest has a minimum of one more manifest nested in it. This gives us the flexibility to target groups of Macs for software deployments, but also target individual Macs.
+We're using the "one manifest per Mac" method, and each Mac's manifest has at least one manifest nested in it. This gives us the flexibility to target groups of Macs for software deployments, but also target individual Macs.
 
 ## Installation
 
